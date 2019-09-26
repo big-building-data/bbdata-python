@@ -6,16 +6,22 @@ Python wrapper around the BBData APIs.
 Announcement
 ------------
 
-Use at your own risks, this project is in progress.
-To check the available functions, check the Jupyter Notebook in 
-
-    docs/getting_started.ipynb
+Use at your own risks, this project is in development.
 
 
-Start Developing
+Getting Started
 ----------------
 
-    # From the root of the project
+Check the available functions of this wrapper in
+
+    docs/getting_started.ipynb
+   
+Install this package, you can do it like this
+    
+    pip install git+https://gitlab.forge.hefr.ch/fredmontet/bbdata-python.git
+
+Develop this package. Execute the following command from the root of the project
+
     pip install -e .
 
 Author
@@ -23,3 +29,6 @@ Author
 
 Frédéric Montet
 frederic.montet@hefr.ch
+
+Lorenz Rychener
+lorenz.rychener@hefr.ch
