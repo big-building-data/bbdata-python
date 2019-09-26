@@ -1,5 +1,7 @@
 class Objects:
 
+    path = "/objects"
+
     def __init__(self):
         print("objects endpoint")
 

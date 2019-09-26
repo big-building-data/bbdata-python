@@ -1,7 +1,7 @@
-BBData Fetcher
+BBData Python
 ==============
 
-Python package to help you easily fetch data from BBData.
+Python wrapper around the BBData APIs.
 
 Start Developing
 ----------------

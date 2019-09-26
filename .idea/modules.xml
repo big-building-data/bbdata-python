@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/bbdata-fetcher.iml" filepath="$PROJECT_DIR$/.idea/bbdata-fetcher.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/bbdata-python.iml" filepath="$PROJECT_DIR$/.idea/bbdata-python.iml" />
     </modules>
   </component>
 </project>
