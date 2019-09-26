@@ -1,2 +1,4 @@
-from .login import Login
+from .auth import Auth
 from .objects import Objects
+
+
