@@ -12,9 +12,9 @@ class Auth:
     password = None
     user_id = None
     secret = None
+    headers = None
 
     def __init__(self):
-
         home = Path.home()
         credentials = Path(".bbdata/credentials.json")
         credentials_path = home / credentials
@@ -38,15 +38,16 @@ class Auth:
         response = r.json()
         self.user_id = response["userId"]
         self.secret = response["secret"]
+        self.headers = {
+            'bbuser': str(self.user_id),
+            'bbtoken': str(self.secret)
+        }
         return response
 
     def logout(self):
         url = output_api_url + "/logout"
-        headers = {
-            'bbuser': str(self.user_id),
-            'bbtoken': str(self.secret)
-        }
-        r = requests.post(url, headers=headers)
+        r = requests.post(url, headers=self.headers)
         self.user_id = None
         self.secret = None
+        self.headers = None
         return r.text
