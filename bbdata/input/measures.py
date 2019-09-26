@@ -3,10 +3,13 @@ class Measures:
     path = "/measures"
 
     def __init__(self):
-        print("objects endpoint")
+        # TODO Implement
+        print("Not Implemented")
 
     def single(self):
-        print("submit a single measurement")
+        # TODO Implement
+        print("Not Implemented")
 
     def bulk(self):
-        print("submit a bulk of measurements")
+        # TODO Implement
+        print("Not Implemented")
