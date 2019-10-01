@@ -31,9 +31,17 @@ class Objects:
         r = requests.get(url, params, headers=self.auth.headers)
         return r.json()
 
-    def create_new(self):
-        # TODO Implement
-        print("Not Implemented")
+    def create_new(self, name, unit, group_id, description=None):
+        params = {
+            "name": name,
+            "description": description,
+            "unitSymbol": unit,
+            'owner': group_id
+        }
+        url = output_api_url + self.base_path
+        r = requests.put(url, params, headers=self.auth.headers)
+        response = r.json()
+        return response
 
     def edit_description(self):
         # TODO Implement
