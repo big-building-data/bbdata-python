@@ -17,7 +17,7 @@ To install this package, you can do it like this
     
     pipenv install -e git+https://gitlab.forge.hefr.ch/fredmontet/bbdata-python.git#egg=python-bbdata
   
-If you'd rather use `pip`
+If you'd rather use `pip`, make sure to do it in a Python virtual environment and execute 
 
     pip install -e git+https://gitlab.forge.hefr.ch/fredmontet/bbdata-python.git
 
