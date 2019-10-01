@@ -16,7 +16,10 @@ class Values:
     def __init__(self, auth):
         self.auth = auth
 
-    def range(self, object_id, from_timestamp, to_timestamp, with_comments=False, headers=True):
+    def get(self, object_id, from_timestamp, to_timestamp, with_comments=False, headers=True):
+        """
+        GET /values
+        """
         params = {
             "ids": object_id,
             "from": from_timestamp,
@@ -29,7 +32,10 @@ class Values:
         r = requests.get(url, params, headers=self.auth.headers)
         return r.json()
 
-    def latest(self, object_id, before_timestamp, with_comments=False):
+    def get_latest(self, object_id, before_timestamp, with_comments=False):
+        """
+        GET /values/latest
+        """
         params = {
             "ids": object_id,
             "before": before_timestamp,
@@ -39,13 +45,22 @@ class Values:
         r = requests.get(url, params, headers=self.auth.headers)
         return r.json()
 
-    def hours(self, object_id, from_timestamp, to_timestamp, with_comments=False, headers=True):
+    def get_hours(self, object_id, from_timestamp, to_timestamp, with_comments=False, headers=True):
+        """
+        GET /values/hours
+        """
         return self.__aggregation(object_id, from_timestamp, to_timestamp, "hours", with_comments, headers)
 
     def quarters(self, object_id, from_timestamp, to_timestamp, with_comments=False, headers=True):
+        """
+        GET /values/quarters
+        """
         return self.__aggregation(object_id, from_timestamp, to_timestamp, "quarters", with_comments, headers)
 
     def __aggregation(self, object_id, from_timestamp, to_timestamp, aggregation, with_comments=False, headers=True):
+        """
+        Generic method to call the aggregations implemented in the API
+        """
         params = {
             "ids": object_id,
             "from": from_timestamp,
