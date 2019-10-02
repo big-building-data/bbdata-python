@@ -19,11 +19,16 @@ class Units:
         r = requests.get(url, headers=self.auth.headers)
         return r.json()
 
-    def post(self):
+    def post(self, name, symbol, type):
         """
         POST /units
         https://bbdata.daplab.ch/api/#units_post
         """
+        data = {
+            "name": name,
+            "symbol": symbol,
+            "type": type
+        }
         url = output_api_url + self.base_path
-        r = requests.post(url, headers=self.auth.headers)
+        r = requests.post(url, data, headers=self.auth.headers)
         return r.json()
