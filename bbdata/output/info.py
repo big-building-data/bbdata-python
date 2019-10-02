@@ -1,4 +1,5 @@
 import requests
+from ..exceptions import UnknownResponseError
 from ..config import output_api_url
 
 
@@ -17,4 +18,7 @@ class Info:
         """
         url = output_api_url + self.base_path
         r = requests.get(url, headers=self.auth.headers)
-        return r.json()
+        if r.status_code == 200:
+            return r.json()
+        else:
+            raise UnknownResponseError

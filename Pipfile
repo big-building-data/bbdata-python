@@ -11,3 +11,4 @@ jupyter = "*"
 [dev-packages]
 pytest = "*"
 jupyterlab = "*"
+jsonschema = "*"

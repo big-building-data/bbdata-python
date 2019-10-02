@@ -1,5 +1,6 @@
 import requests
 from ..config import output_api_url
+from ..exceptions import UnknownResponseError
 
 
 class Units:
@@ -17,18 +18,25 @@ class Units:
         """
         url = output_api_url + self.base_path
         r = requests.get(url, headers=self.auth.headers)
-        return r.json()
+        if r.status_code == 200:
+            return r.json()
+        else:
+            raise UnknownResponseError
 
-    def post(self, name, symbol, type):
+    def post(self, name, symbol, unit_type):
         """
         POST /units
         https://bbdata.daplab.ch/api/#units_post
         """
+        # TODO Finish the implementation and test it
         data = {
             "name": name,
             "symbol": symbol,
-            "type": type
+            "type": unit_type
         }
         url = output_api_url + self.base_path
         r = requests.post(url, data, headers=self.auth.headers)
-        return r.json()
+        if r.status_code == 200:
+            return r.json()
+        else:
+            raise UnknownResponseError

@@ -1,5 +1,6 @@
 import requests
 from ..config import output_api_url
+from ..exceptions import UnknownResponseError, ResourceError, ResourceUnchangedError
 
 
 class ObjectGroups:
@@ -12,6 +13,8 @@ class ObjectGroups:
 
     def get_all(self, with_objects=False, writable=False):
         """
+        Get the list of object groups accessible (in read-only) by the user.
+
         GET /objectGroups
         https://bbdata.daplab.ch/api/#objectgroups_get
         """
@@ -21,98 +24,202 @@ class ObjectGroups:
         }
         url = output_api_url + self.base_path
         r = requests.get(url, params, headers=self.auth.headers)
-        return r.json()
+        if r.status_code == 200:
+            return r.json()
+        else:
+            raise UnknownResponseError("The API response status is unknown")
 
-    def put(self, name, description, unit_symbol, owner):
+    def put(self, name, unit_symbol, owner, description=None):
         """
+        Create a new object group. To allow non-administrative group members
+        to access it, don't forget to add permissions.
+
         PUT /objectGroups
         https://bbdata.daplab.ch/api/#objectgroups_put
         """
-        params = {
+        data = {
             "name": name,
             "description": description,
             "unitSymbol": unit_symbol,
-            "owner": owner,
+            "owner": str(owner),
         }
         url = output_api_url + self.base_path
-        r = requests.put(url, params, headers=self.auth.headers)
-        return r.json()
+        r = requests.put(url, data, headers=self.auth.headers)
+        if r.status_code == 200:
+            return r.json()
+        elif r.status_code == 400:
+            raise ResourceError
+        else:
+            raise UnknownResponseError
 
     def get(self, group_id):
         """
+        Get an object group with all its objects.
+
         GET /objectGroups/{groupId}
         https://bbdata.daplab.ch/api/#objectgroups__groupid__get
         """
-        params = {
-            "groupId": group_id,
-        }
         url = output_api_url + self.base_path + "/" + str(group_id)
-        r = requests.get(url, params, headers=self.auth.headers)
-        return r.json()
+        r = requests.get(url, headers=self.auth.headers)
+        if r.status_code == 200:
+            return r.json()
+        elif r.status_code == 400:
+            raise ResourceError
+        else:
+            raise UnknownResponseError
 
     def post(self, group_id):
         """
+        Edit the name and/or the description of the object group.
+        Only the properties appearing in the body will be modified.
+
         POST /objectGroups/{groupId}
         https://bbdata.daplab.ch/api/#objectgroups__groupid__post
         """
-        # TODO Implement
-        raise NotImplementedError
+        # TODO The data to send isn't define in the API Docs
+        data = {}
+        url = output_api_url + self.base_path + "/" + str(group_id)
+        r = requests.post(url, data, headers=self.auth.headers)
+        if r.status_code == 200:
+            return r.json()
+        elif r.status_code == 304:
+            raise ResourceUnchangedError
+        elif r.status_code == 400:
+            raise ResourceError
+        else:
+            raise UnknownResponseError
 
     def delete(self, group_id):
         """
+        Delete the object.
+
         DELETE /objectGroups/{groupId}
         https://bbdata.daplab.ch/api/#objectgroups__groupid__delete
         """
-        # TODO Implement
-        raise NotImplementedError
+        url = output_api_url + self.base_path + "/" + str(group_id)
+        r = requests.delete(url, headers=self.auth.headers)
+        if r.status_code == 200:
+            return True
+        elif r.status_code == 304:
+            raise ResourceUnchangedError
+        elif r.status_code == 400:
+            raise ResourceError
+        else:
+            raise UnknownResponseError
 
     def get_objects(self, group_id):
         """
+        Get the list of objects part of the group.
+
         GET /objectGroups/{groupId}/objects
         https://bbdata.daplab.ch/api/#objectgroups__groupid__objects_get
         """
-        # TODO Implement
-        raise NotImplementedError
+        url = output_api_url + self.base_path + "/" + str(group_id) + "/objects"
+        r = requests.get(url, headers=self.auth.headers)
+        if r.status_code == 200:
+            return r.json()
+        elif r.status_code == 400:
+            raise ResourceError
+        else:
+            raise UnknownResponseError
 
     def put_object(self, group_id, object_id):
         """
+        Add an object to the group.
+
         GET /objectGroups/{groupId}/objects
         https://bbdata.daplab.ch/api/#objectgroups__groupid__objects_put
         """
-        # TODO Implement
-        raise NotImplementedError
+        data = {
+            "objectId": str(object_id),
+        }
+        url = output_api_url + self.base_path + "/" + str(group_id) + "/objects"
+        r = requests.put(url, data, headers=self.auth.headers)
+        if r.status_code == 200:
+            return r.json()
+        elif r.status_code == 400:
+            raise ResourceError
+        else:
+            raise UnknownResponseError
 
     def delete_object(self, group_id, object_id):
         """
-        GET /objectGroups/{groupId}/objects
-        https://bbdata.daplab.ch/api/#objectgroups__groupid__objects_delete
+        Delete the object.
+
+        DELETE /objectGroups/{groupId}/objects
+        https://bbdata.daplab.ch/api/#objectgroups__groupid__delete
         """
-        # TODO Implement
-        raise NotImplementedError
+        data = {
+            "objectId": str(object_id),
+        }
+        url = output_api_url + self.base_path + "/" + str(group_id) + "/objects"
+        r = requests.delete(url, data, headers=self.auth.headers)
+        if r.status_code == 200:
+            return True
+        elif r.status_code == 304:
+            raise ResourceUnchangedError
+        elif r.status_code == 400:
+            raise ResourceError
+        else:
+            raise UnknownResponseError
 
     def get_permissions(self, group_id):
         """
+        Get the list of user group which have access to the group
+
         GET /objectGroups/{groupId}/permissions
         https://bbdata.daplab.ch/api/#objectgroups__groupid__objects_put
         """
-        # TODO Implement
-        raise NotImplementedError
+        url = output_api_url + self.base_path + "/" + str(group_id) + "/permissions"
+        r = requests.get(url, headers=self.auth.headers)
+        if r.status_code == 200:
+            return r.json()
+        elif r.status_code == 400:
+            raise ResourceError
+        else:
+            raise UnknownResponseError
 
     def put_permissions(self, group_id, group_id_to_add):
         """
-        GET /objectGroups/{groupId}/permissions
+        Grant permissions on the group to a user group.
+
+        PUT /objectGroups/{groupId}/permissions
         https://bbdata.daplab.ch/api/#objectgroups__groupid__objects_put
         """
-        # TODO Implement
-        raise NotImplementedError
+        data = {
+            "groupId": str(group_id_to_add),
+        }
+        url = output_api_url + self.base_path + "/" + str(group_id) + "/permissions"
+        r = requests.put(url, data, headers=self.auth.headers)
+        if r.status_code == 200:
+            return r.json()
+        elif r.status_code == 304:
+            raise ResourceUnchangedError
+        elif r.status_code == 400:
+            raise ResourceError
+        else:
+            raise UnknownResponseError
 
     def delete_permissions(self, group_id, group_id_to_delete):
         """
-        GET /objectGroups/{groupId}/permissions
-        https://bbdata.daplab.ch/api/#objectgroups__groupid__objects_put
+        Revoke a permission.
+
+        DELETE /objectGroups/{groupId}/permissions
+        https://bbdata.daplab.ch/api/#objectgroups__groupid__objects_delete
         """
-        # TODO Implement
-        raise NotImplementedError
+        data = {
+            "groupId": str(group_id_to_delete),
+        }
+        url = output_api_url + self.base_path + "/" + str(group_id) + "/permissions"
+        r = requests.delete(url, data, headers=self.auth.headers)
+        if r.status_code == 200:
+            return True
+        elif r.status_code == 304:
+            raise ResourceUnchangedError
+        elif r.status_code == 400:
+            raise ResourceError
+        else:
+            raise UnknownResponseError
 
 
 
