@@ -8,6 +8,7 @@ class TestAuth(unittest.TestCase):
         before_login = output.me.get()
         output.login()
         after_login = output.me.get()
+        print(after_login)
         self.assertNotEqual(before_login, after_login, "User is logged out, he should be logged in")
 
     def test__logout(self):
@@ -15,5 +16,6 @@ class TestAuth(unittest.TestCase):
         output.login()
         output.logout()
         response = output.me.get()
+        print(response)
         exception = response["exception"]
         self.assertEqual(expected_exception, exception, "Exception AccessDenied wasn't thrown")

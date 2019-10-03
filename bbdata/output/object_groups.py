@@ -1,7 +1,6 @@
 import requests
 from ..config import output_api_url
-from ..exceptions import UnknownResponseError, ResourceError, ResourceUnchangedError
-
+from ..util import handle_response
 
 class ObjectGroups:
 
@@ -24,10 +23,7 @@ class ObjectGroups:
         }
         url = output_api_url + self.base_path
         r = requests.get(url, params, headers=self.auth.headers)
-        if r.status_code == 200:
-            return r.json()
-        else:
-            raise UnknownResponseError("The API response status is unknown")
+        return handle_response(r.status_code, r.json())
 
     def put(self, name, unit_symbol, owner, description=None):
         """
@@ -45,12 +41,7 @@ class ObjectGroups:
         }
         url = output_api_url + self.base_path
         r = requests.put(url, data, headers=self.auth.headers)
-        if r.status_code == 200:
-            return r.json()
-        elif r.status_code == 400:
-            raise ResourceError
-        else:
-            raise UnknownResponseError
+        return handle_response(r.status_code, r.json())
 
     def get(self, group_id):
         """
@@ -61,14 +52,9 @@ class ObjectGroups:
         """
         url = output_api_url + self.base_path + "/" + str(group_id)
         r = requests.get(url, headers=self.auth.headers)
-        if r.status_code == 200:
-            return r.json()
-        elif r.status_code == 400:
-            raise ResourceError
-        else:
-            raise UnknownResponseError
+        return handle_response(r.status_code, r.json())
 
-    def post(self, group_id):
+    def post(self, group_id, data):
         """
         Edit the name and/or the description of the object group.
         Only the properties appearing in the body will be modified.
@@ -77,17 +63,9 @@ class ObjectGroups:
         https://bbdata.daplab.ch/api/#objectgroups__groupid__post
         """
         # TODO The data to send isn't define in the API Docs
-        data = {}
         url = output_api_url + self.base_path + "/" + str(group_id)
         r = requests.post(url, data, headers=self.auth.headers)
-        if r.status_code == 200:
-            return r.json()
-        elif r.status_code == 304:
-            raise ResourceUnchangedError
-        elif r.status_code == 400:
-            raise ResourceError
-        else:
-            raise UnknownResponseError
+        return handle_response(r.status_code, r.json())
 
     def delete(self, group_id):
         """
@@ -98,14 +76,7 @@ class ObjectGroups:
         """
         url = output_api_url + self.base_path + "/" + str(group_id)
         r = requests.delete(url, headers=self.auth.headers)
-        if r.status_code == 200:
-            return True
-        elif r.status_code == 304:
-            raise ResourceUnchangedError
-        elif r.status_code == 400:
-            raise ResourceError
-        else:
-            raise UnknownResponseError
+        handle_response(r.status_code, True)
 
     def get_objects(self, group_id):
         """
@@ -116,12 +87,7 @@ class ObjectGroups:
         """
         url = output_api_url + self.base_path + "/" + str(group_id) + "/objects"
         r = requests.get(url, headers=self.auth.headers)
-        if r.status_code == 200:
-            return r.json()
-        elif r.status_code == 400:
-            raise ResourceError
-        else:
-            raise UnknownResponseError
+        return handle_response(r.status_code, r.json())
 
     def put_object(self, group_id, object_id):
         """
@@ -135,12 +101,7 @@ class ObjectGroups:
         }
         url = output_api_url + self.base_path + "/" + str(group_id) + "/objects"
         r = requests.put(url, data, headers=self.auth.headers)
-        if r.status_code == 200:
-            return r.json()
-        elif r.status_code == 400:
-            raise ResourceError
-        else:
-            raise UnknownResponseError
+        return handle_response(r.status_code, r.json())
 
     def delete_object(self, group_id, object_id):
         """
@@ -154,14 +115,7 @@ class ObjectGroups:
         }
         url = output_api_url + self.base_path + "/" + str(group_id) + "/objects"
         r = requests.delete(url, data, headers=self.auth.headers)
-        if r.status_code == 200:
-            return True
-        elif r.status_code == 304:
-            raise ResourceUnchangedError
-        elif r.status_code == 400:
-            raise ResourceError
-        else:
-            raise UnknownResponseError
+        return handle_response(r.status_code, True)
 
     def get_permissions(self, group_id):
         """
@@ -172,12 +126,7 @@ class ObjectGroups:
         """
         url = output_api_url + self.base_path + "/" + str(group_id) + "/permissions"
         r = requests.get(url, headers=self.auth.headers)
-        if r.status_code == 200:
-            return r.json()
-        elif r.status_code == 400:
-            raise ResourceError
-        else:
-            raise UnknownResponseError
+        return handle_response(r.status_code, r.json())
 
     def put_permissions(self, group_id, group_id_to_add):
         """
@@ -191,14 +140,7 @@ class ObjectGroups:
         }
         url = output_api_url + self.base_path + "/" + str(group_id) + "/permissions"
         r = requests.put(url, data, headers=self.auth.headers)
-        if r.status_code == 200:
-            return r.json()
-        elif r.status_code == 304:
-            raise ResourceUnchangedError
-        elif r.status_code == 400:
-            raise ResourceError
-        else:
-            raise UnknownResponseError
+        return handle_response(r.status_code, r.json())
 
     def delete_permissions(self, group_id, group_id_to_delete):
         """
@@ -212,14 +154,7 @@ class ObjectGroups:
         }
         url = output_api_url + self.base_path + "/" + str(group_id) + "/permissions"
         r = requests.delete(url, data, headers=self.auth.headers)
-        if r.status_code == 200:
-            return True
-        elif r.status_code == 304:
-            raise ResourceUnchangedError
-        elif r.status_code == 400:
-            raise ResourceError
-        else:
-            raise UnknownResponseError
+        return handle_response(r.status_code, True)
 
 
 

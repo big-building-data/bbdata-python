@@ -3,6 +3,7 @@ import requests
 from pathlib import Path
 
 from ..config import output_api_url
+from ..util import handle_non_ok_status
 
 
 class Auth:
@@ -18,7 +19,6 @@ class Auth:
         home = Path.home()
         credentials = Path(".bbdata/credentials.json")
         credentials_path = home / credentials
-
         if credentials_path.is_file():
             with open(str(credentials_path)) as json_file:
                 data = json.load(json_file)
@@ -33,21 +33,26 @@ class Auth:
 
     def login(self):
         url = output_api_url + "/login"
-        headers = {'content-type': 'application/json'}
-        r = requests.post(url, headers=headers, json=self.credentials)
-        response = r.json()
-        self.user_id = response["userId"]
-        self.secret = response["secret"]
-        self.headers = {
-            'bbuser': str(self.user_id),
-            'bbtoken': str(self.secret)
-        }
-        return response
+        r = requests.post(url, json=self.credentials)
+        if r.status_code == 200:
+            self.user_id = r.json()["userId"]
+            self.secret = r.json()["secret"]
+            self.headers = {
+                'bbuser': str(self.user_id),
+                'bbtoken': str(self.secret)
+            }
+            return r.json()
+        else:
+            handle_non_ok_status(r.status_code)
 
     def logout(self):
         url = output_api_url + "/logout"
         r = requests.post(url, headers=self.headers)
-        self.user_id = None
-        self.secret = None
-        self.headers = None
-        return r.text
+        if r.status_code == 200:
+            self.user_id = None
+            self.secret = None
+            self.headers = None
+            return r.text
+        else:
+            handle_non_ok_status(r.status_code)
+

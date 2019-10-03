@@ -1,6 +1,6 @@
 import requests
 from ..config import output_api_url
-from ..exceptions import UnknownResponseError
+from ..util import handle_response
 
 
 class Units:
@@ -18,10 +18,7 @@ class Units:
         """
         url = output_api_url + self.base_path
         r = requests.get(url, headers=self.auth.headers)
-        if r.status_code == 200:
-            return r.json()
-        else:
-            raise UnknownResponseError
+        return handle_response(r.status_code. r.json())
 
     def post(self, name, symbol, unit_type):
         """
@@ -36,7 +33,5 @@ class Units:
         }
         url = output_api_url + self.base_path
         r = requests.post(url, data, headers=self.auth.headers)
-        if r.status_code == 200:
-            return r.json()
-        else:
-            raise UnknownResponseError
+        return handle_response(r.status_code.r.json())
+
