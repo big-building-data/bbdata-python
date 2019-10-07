@@ -24,7 +24,7 @@ class TestInfo(unittest.TestCase):
 
     def test__post(self):
         # TODO Implement test
-        #response = output.objects.post(...)
+        # response = output.objects.post(...)
         self.assertFalse(True)
 
     def test__delete(self):

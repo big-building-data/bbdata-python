@@ -1,7 +1,8 @@
 from enum import Enum
 import requests
 from ..config import output_api_url
-
+from ..util import handle_response
+from ..exceptions import ClientException
 
 class Aggregation(Enum):
     QUARTERS = "quarters"
@@ -18,7 +19,10 @@ class Values:
 
     def get(self, object_id, from_timestamp, to_timestamp, with_comments=False, headers=True):
         """
+        Get measures.
+
         GET /values
+        https://bbdata.daplab.ch/api/#values_get
         """
         params = {
             "ids": object_id,
@@ -30,11 +34,17 @@ class Values:
 
         url = output_api_url + self.base_path
         r = requests.get(url, params, headers=self.auth.headers)
-        return r.json()
+        return handle_response(r.status_code, r.json())
 
     def get_latest(self, object_id, before_timestamp, with_comments=False):
         """
+        Get the latest measure before a given date, if any. Note that the
+        lookup won't go further than six month in time. This means that if the
+        object didn't deliver any value in the six month before the "before"
+        parameter, no value will be returned.
+
         GET /values/latest
+        https://bbdata.daplab.ch/api/#values_latest_get
         """
         params = {
             "ids": object_id,
@@ -43,16 +53,18 @@ class Values:
         }
         url = output_api_url + self.base_path
         r = requests.get(url, params, headers=self.auth.headers)
-        return r.json()
+        return handle_response(r.status_code, r.json())
 
     def get_hours(self, object_id, from_timestamp, to_timestamp, with_comments=False, headers=True):
         """
+        # TODO No definition in the docs
         GET /values/hours
         """
         return self.__aggregation(object_id, from_timestamp, to_timestamp, "hours", with_comments, headers)
 
-    def quarters(self, object_id, from_timestamp, to_timestamp, with_comments=False, headers=True):
+    def get_quarters(self, object_id, from_timestamp, to_timestamp, with_comments=False, headers=True):
         """
+        # TODO No definition in the docs
         GET /values/quarters
         """
         return self.__aggregation(object_id, from_timestamp, to_timestamp, "quarters", with_comments, headers)
@@ -70,12 +82,13 @@ class Values:
         }
 
         url = output_api_url + self.base_path
+
         if aggregation == Aggregation.HOURS.value:
             url = url + "/hours"
         elif aggregation == Aggregation.QUARTERS.value:
             url = url + "/quarters"
         else:
-            print("This aggregation isn't implemented")
+            raise ClientException("This aggregation isn't implemented")
 
         r = requests.get(url, params, headers=self.auth.headers)
-        return r.json()
+        return handle_response(r.status_code, r.json())

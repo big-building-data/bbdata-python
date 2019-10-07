@@ -1,5 +1,6 @@
 import requests
 from ..config import output_api_url
+from ..util import handle_response
 
 
 class Users:
@@ -12,9 +13,12 @@ class Users:
 
     def get(self):
         """
+        Get the list of all users registered.
+
         GET /users
         https://bbdata.dsaplab.ch/api/#users_get
         """
         url = output_api_url + self.base_path
         r = requests.get(url, headers=self.auth.headers)
-        return r.json()
+        return handle_response(r.status_code, r.json())
+

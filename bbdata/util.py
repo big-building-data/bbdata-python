@@ -35,5 +35,7 @@ def handle_non_ok_status(status_code):
         raise ResourceException("An error 400 was thrown")
     elif status_code == 401:
         raise UnauthorizedException("An error 401 was thrown")
+    elif status_code == 404:
+        raise ResourceException("An error 404 was thrown")
     else:
         raise UnknownResponseException("WTF?!")

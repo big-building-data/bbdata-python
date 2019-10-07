@@ -73,6 +73,8 @@ class Objects:
 
     def delete(self, object_id):
         """
+        Delete the object with the given id
+
         POST /objects/{objectId}
         https://bbdata.daplab.ch/api/#objects__objectid__delete
         """
