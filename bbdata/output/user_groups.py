@@ -110,8 +110,8 @@ class UserGroups:
         }
         url = output_api_url + self.base_path + "/" + str(user_group_id) \
             + "/users"
-        r = requests.put(url, params, headers=self.auth.headers)
-        return handle_response(r.status_code, r.json())
+        r = requests.delete(url, params, headers=self.auth.headers)
+        return handle_non_ok_status(r.status_code)
 
     def put_users_new(self, user_group_id, name, email, password, admin=False):
         """
@@ -130,5 +130,5 @@ class UserGroups:
         }
         url = output_api_url + self.base_path + "/" + str(user_group_id) \
             + "/users/new"
-        r = requests.put(url, params, headers=self.auth.headers)
+        r = requests.put(url, data, params=params, headers=self.auth.headers)
         return handle_response(r.status_code, r.json())
