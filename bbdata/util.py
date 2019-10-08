@@ -1,7 +1,7 @@
 from .exceptions import UnknownResponseException, ResourceException, ResourceUnchangedException, UnauthorizedException
 
 
-def handle_response(status_code: int, return_value):
+def handle_response(status_code, return_value):
     """
     Takes care of the error handling of a BBData's API
     response

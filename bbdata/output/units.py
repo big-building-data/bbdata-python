@@ -18,7 +18,7 @@ class Units:
         """
         url = output_api_url + self.base_path
         r = requests.get(url, headers=self.auth.headers)
-        return handle_response(r.status_code. r.json())
+        return handle_response(r.status_code, r.json())
 
     def post(self, name, symbol, unit_type):
         """
@@ -33,5 +33,5 @@ class Units:
         }
         url = output_api_url + self.base_path
         r = requests.post(url, data, headers=self.auth.headers)
-        return handle_response(r.status_code.r.json())
+        return handle_response(r.status_code, r.json())
 

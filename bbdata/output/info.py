@@ -18,5 +18,5 @@ class Info:
         """
         url = output_api_url + self.base_path
         r = requests.get(url, headers=self.auth.headers)
-        return handle_response(r.status_code. r.json())
+        return handle_response(r.status_code, r.json())
 
