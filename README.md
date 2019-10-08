@@ -15,11 +15,11 @@ Getting Started
    
 To install this package, you can do it like this
     
-    pipenv install -e git+https://gitlab.forge.hefr.ch/fredmontet/bbdata-python.git#egg=python-bbdata
+    pipenv install -e git+https://gitlab.forge.hefr.ch/fredmontet/bbdata-python.git#egg=bbdata-python
   
 If you'd rather use `pip`, make sure to do it in a Python virtual environment and execute 
 
-    pip install -e git+https://gitlab.forge.hefr.ch/fredmontet/bbdata-python.git
+    pip install -e git+https://gitlab.forge.hefr.ch/fredmontet/bbdata-python.git#egg=bbdata-python
 
 To check the available functions of this wrapper in
 

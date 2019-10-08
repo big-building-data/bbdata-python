@@ -1,6 +1,6 @@
 import requests
-from ..config import output_api_url
-from ..util import handle_response, handle_non_ok_status
+from bbdata.config import output_api_url
+from bbdata.util import handle_response, handle_non_ok_status
 
 
 class Me:

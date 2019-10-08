@@ -1,11 +1,11 @@
 import requests
-from ..config import output_api_url
-from ..util import handle_response
+from bbdata.util import handle_response
+from bbdata.config import output_api_url
 
 
-class Users:
+class Info:
 
-    base_path = "/users"
+    base_path = "/info"
     auth = None
 
     def __init__(self, auth):
@@ -13,10 +13,8 @@ class Users:
 
     def get(self):
         """
-        Get the list of all users registered.
-
-        GET /users
-        https://bbdata.dsaplab.ch/api/#users_get
+        GET /info
+        https://bbdata.daplab.ch/api/#info_get
         """
         url = output_api_url + self.base_path
         r = requests.get(url, headers=self.auth.headers)

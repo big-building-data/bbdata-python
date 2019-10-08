@@ -1,5 +1,5 @@
-from .input import *
-from .output import *
+from bbdata.routes.input import *
+from bbdata.routes.output import *
 
 
 
