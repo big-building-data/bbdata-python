@@ -9,19 +9,23 @@ class TestComments(unittest.TestCase):
 
     def test__get_all(self):
         response = output.comments.get_all()
-        print(type(response))
+        print(response)
 
     def test__put(self):
-        return False
+        # response = output.comments.put(...)
+        self.assertFalse(True)
 
     def test__get(self):
-        return False
+        response = output.comments.get(1)
+        print(response)
 
     def test__delete(self):
-        return False
+        # response = output.comments.delete(...)
+        self.assertFalse(True)
 
     def test__post(self):
-        return False
+        # response = output.comments.post(...)
+        self.assertFalse(True)
 
     def tearDown(self) -> None:
         output.logout()
