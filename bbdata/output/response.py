@@ -7,13 +7,13 @@ class Response:
         self.raw_out = return_value
 
     def to_dataframe(self):
-        pass
+        raise NotImplementedError
 
     def to_csv(self):
-        pass
+        raise NotImplementedError
 
     def to_pickle(self):
-        pass
+        raise NotImplementedError
 
     def __repr__(self):
         return "Response()"
