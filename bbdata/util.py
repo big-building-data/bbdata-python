@@ -1,6 +1,6 @@
 from .exceptions import UnknownResponseException, ResourceException, ResourceUnchangedException, UnauthorizedException, \
     LoginRequiredException
-from bbdata.output.response import Response
+from bbdata.output.response import ValueRespone
 
 
 def handle_response(status_code, return_value):
@@ -17,7 +17,7 @@ def handle_response(status_code, return_value):
 
     """
     if status_code == 200:
-        return Response(return_value)
+        return ValueRespone(return_value)
     else:
         handle_non_ok_status(status_code)
 

@@ -1,3 +1,5 @@
+import pandas as pd
+
 
 class Response:
     '''
@@ -5,6 +7,9 @@ class Response:
     '''
     def __init__(self, return_value=None):
         self.raw_out = return_value
+
+    def to_json(self):
+        return self.raw_out
 
     def to_dataframe(self):
         raise NotImplementedError
@@ -27,15 +32,22 @@ class Response:
     def __getitem__(self, item):
         return self.raw_out[item]
 
+class ValueRespone(Response):
+    def __init__(self, return_value=None):
+        super().__init__(return_value=return_value)
 
-class ResponseIterator():
+    def to_dataframe(self):
+        return pd.DataFrame(self.raw_out)
+
+
+class ResponseIterator:
+    """
+    Iterator for the Response-object
+    """
     def __init__(self, raw_out):
-        #data
         self._raw_out = raw_out
-        #start index
-        self._index = 0
 
-        print(type(raw_out))
+        self._index = 0
 
     def __next__(self):
         if self._index < len(self._raw_out):
