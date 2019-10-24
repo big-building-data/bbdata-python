@@ -4,12 +4,12 @@ class Measures:
 
     def __init__(self):
         # TODO Implement
-        print("Not Implemented")
+        raise NotImplementedError
 
     def single(self):
         # TODO Implement
-        print("Not Implemented")
+        raise NotImplementedError
 
     def bulk(self):
         # TODO Implement
-        print("Not Implemented")
+        raise NotImplementedError
