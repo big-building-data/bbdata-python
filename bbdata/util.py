@@ -1,6 +1,6 @@
 from .exceptions import UnknownResponseException, ResourceException, ResourceUnchangedException, UnauthorizedException, \
     LoginRequiredException
-from bbdata.output.response import ValueResponse, Response
+from bbdata.response import Response
 
 
 def handle_response(status_code, return_value):
