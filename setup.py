@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="bbdata-python",
-    version="0.0.4",
+    version="0.2",
     author="Frédéric Montet",
     author_email="frederic.montet@hefr.ch",
     description="A Python wrapper around the BBData APIs",
