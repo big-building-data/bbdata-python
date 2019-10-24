@@ -1,4 +1,6 @@
-from .exceptions import UnknownResponseException, ResourceException, ResourceUnchangedException, UnauthorizedException
+from .exceptions import UnknownResponseException, ResourceException, ResourceUnchangedException, UnauthorizedException, \
+    LoginRequiredException
+from bbdata.output.response import ValueResponse, Response
 
 
 def handle_response(status_code, return_value):
@@ -15,7 +17,7 @@ def handle_response(status_code, return_value):
 
     """
     if status_code == 200:
-        return return_value
+        return Response(return_value)
     else:
         handle_non_ok_status(status_code)
 
@@ -26,7 +28,7 @@ def handle_non_ok_status(status_code):
     to a given HTTP status code
 
     Args:
-        status_code: the integer reprensting the status code
+        status_code: the integer representing the status code
 
     """
     if status_code == 304:
@@ -35,6 +37,8 @@ def handle_non_ok_status(status_code):
         raise ResourceException("An error 400 was thrown")
     elif status_code == 401:
         raise UnauthorizedException("An error 401 was thrown")
+    elif status_code == 403:
+        raise LoginRequiredException("An error 403 was thrown. This resource is protected. Please login.")
     elif status_code == 404:
         raise ResourceException("An error 404 was thrown")
     else:
