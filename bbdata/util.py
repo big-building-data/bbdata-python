@@ -1,6 +1,6 @@
 from .exceptions import UnknownResponseException, ResourceException, ResourceUnchangedException, UnauthorizedException, \
     LoginRequiredException
-from bbdata.output.response import ValueRespone
+from bbdata.output.response import ValueResponse, Response
 
 
 def handle_response(status_code, return_value):
@@ -17,7 +17,7 @@ def handle_response(status_code, return_value):
 
     """
     if status_code == 200:
-        return ValueRespone(return_value)
+        return Response(return_value)
     else:
         handle_non_ok_status(status_code)
 
@@ -28,7 +28,7 @@ def handle_non_ok_status(status_code):
     to a given HTTP status code
 
     Args:
-        status_code: the integer reprensting the status code
+        status_code: the integer representing the status code
 
     """
     if status_code == 304:
