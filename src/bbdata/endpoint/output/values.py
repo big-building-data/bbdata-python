@@ -1,8 +1,8 @@
 from enum import Enum
 import requests
-from ..config import output_api_url
-from ..util import handle_response
-from ..exceptions import ClientException
+from bbdata.config import output_api_url
+from bbdata.util import handle_response
+from bbdata.exceptions import ClientException
 
 class Aggregation(Enum):
     QUARTERS = "quarters"

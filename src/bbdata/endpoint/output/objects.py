@@ -1,6 +1,6 @@
 import requests
-from ..config import output_api_url
-from ..util import handle_response
+from bbdata.config import output_api_url
+from bbdata.util import handle_response
 
 
 class Objects:
@@ -56,6 +56,7 @@ class Objects:
         """
         url = output_api_url + self.base_path + "/" + str(object_id)
         r = requests.get(url, headers=self.auth.headers)
+        # return ObjectResponse(r.json())
         return handle_response(r.status_code, r.json())
 
     def post(self, object_id, data):

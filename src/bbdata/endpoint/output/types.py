@@ -1,11 +1,11 @@
 import requests
-from ..util import handle_response
-from ..config import output_api_url
+from bbdata.config import output_api_url
+from bbdata.util import handle_response
 
 
-class Info:
+class Types:
 
-    base_path = "/info"
+    base_path = "/types"
     auth = None
 
     def __init__(self, auth):
@@ -13,10 +13,9 @@ class Info:
 
     def get(self):
         """
-        GET /info
-        https://bbdata.daplab.ch/api/#info_get
+        GET /types
+        https://bbdata.daplab.ch/api/#types_get
         """
         url = output_api_url + self.base_path
         r = requests.get(url, headers=self.auth.headers)
         return handle_response(r.status_code, r.json())
-

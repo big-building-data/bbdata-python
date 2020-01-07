@@ -10,10 +10,10 @@ from .users import Users
 from .me import Me
 from .comments import Comments
 
+
 class Output:
 
     def __init__(self):
-
         self.auth = Auth()
         self.info = Info(self.auth)
         self.units = Units(self.auth)

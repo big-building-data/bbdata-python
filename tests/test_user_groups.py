@@ -1,5 +1,5 @@
 import unittest
-from bbdata import output
+from bbdata.endpoint import output
 
 
 class TestUserGroups(unittest.TestCase):

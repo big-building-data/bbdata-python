@@ -58,6 +58,16 @@ class UnauthorizedException(BBDataException):
         self.message = message
 
 
+class LoginRequiredException(BBDataException):
+    """Exception raised when the user requests a resource he doesn't have access to.
+
+    Attributes:
+         message -- explanation of the error
+    """
+    def __init__(self, message):
+        self.message = message
+
+
 class ClientException(BBDataException):
     """Exception raised that don't involve interaction with BBData's API.
 
