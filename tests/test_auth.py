@@ -1,21 +1,24 @@
 import unittest
-from bbdata import output
+from bbdata.endpoint import output
+from src.bbdata.exceptions import LoginRequiredException
 
 
 class TestAuth(unittest.TestCase):
 
+    def test__auth(self):
+        with self.assertRaises(Exception):
+            output.me.get()
+
     def test__login(self):
-        before_login = output.me.get()
-        output.login()
-        after_login = output.me.get()
-        print(after_login)
-        self.assertNotEqual(before_login, after_login, "User is logged out, he should be logged in")
+        try:
+            output.login()
+            me = output.me.get()
+            print(me)
+        except Exception:
+            self.fail("User is logged out, he should be logged in")
 
     def test__logout(self):
-        expected_exception = "AccessDenied"
         output.login()
         output.logout()
-        response = output.me.get()
-        print(response)
-        exception = response["exception"]
-        self.assertEqual(expected_exception, exception, "Exception AccessDenied wasn't thrown")
+        with self.assertRaises(Exception):
+            me = output.me.get()
