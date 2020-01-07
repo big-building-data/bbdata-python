@@ -5,7 +5,8 @@ import json
 
 class Response:
     """
-    A class, that handles the responses done  by the route. This is the base class that returns a generic json
+    A class, that handles the responses done by the route. This is the base
+    class that returns a generic json
     """
 
     def __init__(self, return_value=None, *args, **kwargs):
@@ -15,7 +16,7 @@ class Response:
     def to_json(self, filename=None, path='./', safe=False):
         if safe:
             if filename is None or path is None:
-                raise ValueError("If you want to safe to .json please provide a filename")
+                raise ValueError("If you want to save to .json please provide a filename")
             else:
                 with open(path + filename + '.json', 'w') as out_json:
                     json.dump(self.to_json(), out_json)

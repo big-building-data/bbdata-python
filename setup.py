@@ -4,14 +4,15 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="bbdata-python",
+    name="bbdata",
     version="0.2",
     author="Frédéric Montet",
     author_email="frederic.montet@hefr.ch",
     description="A Python wrapper around the BBData APIs",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages('src'),
+    package_dir={'': 'src'},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
@@ -19,6 +20,7 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-       'requests>=2.22.0, <3',
+        'pandas>=0.25.3, <0.26',
+        'requests>=2.22.0, <3',
     ]
 )
