@@ -16,7 +16,8 @@ class Response:
     def to_json(self, filename=None, path='./', safe=False):
         if safe:
             if filename is None or path is None:
-                raise ValueError("If you want to save to .json please provide a filename")
+                raise ValueError("If you want to save to .json please provide "
+                                 "a filename")
             else:
                 with open(path + filename + '.json', 'w') as out_json:
                     json.dump(self.to_json(), out_json)
@@ -82,7 +83,8 @@ class ValueResponse(Response):
     def get_timestamp_set(self):
         # [x for b in a for x in b]
         timestamps = sorted(
-            list(set([d['timestamp'] for obj in self.raw_out for d in obj['values'] if 'timestamp' in d])))
+            list(set([d['timestamp'] for obj in self.raw_out
+                      for d in obj['values'] if 'timestamp' in d])))
         return timestamps
 
 
