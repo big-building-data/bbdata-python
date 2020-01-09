@@ -33,7 +33,7 @@ class Response:
         raise NotImplementedError
 
     def __repr__(self):
-        return "Response()"
+        return self.to_json()
 
     def __str__(self):
         return str(self.raw_out)

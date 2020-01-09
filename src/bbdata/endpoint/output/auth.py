@@ -25,7 +25,6 @@ class Auth:
             self.credentials = data
             self.username = data['username']
             self.password = data['password']
-            print("Welcome " + self.username)
         else:
             print("You don't have any credentials file. Create it at ~" + str(credentials))
             print("The content should be :")
