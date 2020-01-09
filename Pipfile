@@ -7,7 +7,7 @@ name = "pypi"
 python_version = "3.7"
 
 [packages]
-bbdata-python = {editable = true,path = "."}
+bbdata = {editable = true,path = "."}
 
 [dev-packages]
 pytest = "*"
