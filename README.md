@@ -7,7 +7,7 @@ Python wrapper around the BBData APIs.
 Announcement
 ------------
 
-Use at your own risks, this project is in development.
+Use at your own risk, the current project is still in development.
 
 
 Getting Started
@@ -15,11 +15,7 @@ Getting Started
    
 To install this package, you can do it like this :
     
-    pipenv install -e git+https://gitlab.forge.hefr.ch/fredmontet/bbdata-python.git#egg=bbdata-python
-  
-If you'd rather use `pip`, make sure to do it in a Python virtual environment and execute :
-
-    pip install -e git+https://gitlab.forge.hefr.ch/fredmontet/bbdata-python.git#egg=bbdata-python
+    pip install bbdata
 
 To check the logic behind this wrapper function naming convention, go in :
 
