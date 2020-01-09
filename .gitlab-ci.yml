@@ -1,7 +1,6 @@
 publish:
   stage: deploy
-  services:
-    - python:3.7
+  image: python:3.7
   only:
     - master
   script:
