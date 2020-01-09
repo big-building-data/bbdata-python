@@ -11,7 +11,8 @@ setuptools.setup(
     description="A Python wrapper around the BBData APIs",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    packages=setuptools.find_packages('src'),
+    include_package_data=True,
+    packages=setuptools.find_packages('src', exclude='tests'),
     package_dir={'': 'src'},
     classifiers=[
         "Programming Language :: Python :: 3",
