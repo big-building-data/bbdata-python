@@ -27,7 +27,7 @@ Develop
 
 To develop this package. Execute the following command from the root of the project :
 
-    pipenv install
+    pipenv install --dev
     
 and you should be good to go!
 
